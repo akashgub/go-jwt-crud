@@ -95,3 +95,51 @@ JWT_SECRET=your_secret_key
 go mod init go-jwt-crud
 go mod tidy
 go run main.go
+
+Server will start at: http://localhost:8080
+
+## Testing the API
+
+Use Postman or similar tools:
+
+Register a new user
+
+Login to get JWT token
+
+Add token in header
+
+Access protected CRUD endpoints
+
+✅ Key Concepts Used
+
+RESTful API Design
+
+JWT Authentication & Middleware
+
+Password Security (bcrypt)
+
+Modular Golang Project Structure
+
+Separation of Concerns
+
+Database ORM (GORM)
+
+Environment-based Configuration
+
+📈 Future Improvements
+
+Role-based authorization (Admin/User)
+
+Refresh Tokens
+
+Pagination & Search
+
+Docker & CI/CD pipeline
+
+Clean Architecture (Service & Repository layers) 
+
+👨‍💻 Author
+
+Md. Akash Hossain
+CSE Student | Backend Developer
+Skilled in Golang, REST API, JWT, PostgreSQL
