@@ -9,12 +9,37 @@ import (
 )
 
 func UpdatePost(c *gin.Context) {
-	var post models.Post
+	//var post models.Post
 	id := c.Param("id")
 
-	database.DB.First(&post, id)
-	c.ShouldBindJSON(&post)
-	database.DB.Save(&post)
+	var existing models.Post
+	if err := database.DB.First(&existing, id).Error; err != nil {
+		c.JSON(http.StatusNotFound, gin.H{
+			"error": "Post not found",
+		})
+		return
+	}
+	var body struct {
+		Title   string `json:"title"`
+		Content string `json:"content"`
+	}
 
-	c.JSON(http.StatusOK, post)
+	if err := c.ShouldBindJSON(&body); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": "Invalid request body",
+		})
+		return
+	}
+
+	//update only safe fields
+	existing.Title = body.Title
+	existing.Content = body.Content
+
+	if err := database.DB.Save(&existing).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"error": "Failed to update post",
+		})
+		return
+	}
+	c.JSON(http.StatusOK, existing)
 }
